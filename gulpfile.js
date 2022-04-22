@@ -21,7 +21,7 @@ const destPath = '/home/daw/ftp/html'
 // Elimina els fitxers anteriors i copia els nous fitxers a la nova ruta
 function copySourceFiles(cb) {
     // Remove previous files
-    del([destPath + '**/*.*'], cb)
+    del([destPath + '**/*.*'], {force:true})
     // Copy new files
     return src([srcPath + '**/*.{html,css,js,svg,png,jpg,jpeg}'])
         .pipe(dest(destPath))
@@ -38,7 +38,7 @@ function minifyCss(cb) {
 // Task C
 function minifyJs(cb) {
     // TO DO
-    return src([srcPath] + 'scripts/*.js')
+    return src([srcPath + 'scripts/*.js'])
         .pipe(uglify())
         .pipe(dest(destPath + 'scripts/'))
 }
@@ -61,8 +61,10 @@ exports.minify = parallel(
 // Task 3. Execute tasks when a change occurs
 exports.watch = function(cb) {
     // TO DO
-   watch([srcPath],this.default)
-}
+   watch('src',function(){
+	series(this.default)
+	});
+};
 
 // Task 4. Execute tasks 1 and 2
 // Executa una darrera de l'altre les tasques 1 i 2
