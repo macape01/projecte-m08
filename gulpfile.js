@@ -38,7 +38,7 @@ function minifyCss(cb) {
 // Task C
 function minifyJs(cb) {
     // TO DO
-    return src([srcPath + 'scripts/*.js')
+    return src([srcPath] + 'scripts/*.js')
         .pipe(uglify())
         .pipe(dest(destPath + 'scripts/'))
 }
@@ -61,7 +61,7 @@ exports.minify = parallel(
 // Task 3. Execute tasks when a change occurs
 exports.watch = function(cb) {
     // TO DO
-    return watch([srcPath],series(this.update,this.minify))
+   watch([srcPath],this.default)
 }
 
 // Task 4. Execute tasks 1 and 2
